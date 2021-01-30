@@ -1,0 +1,8 @@
+{
+    "presets": [
+        //nombre de los presets que instalamos
+        [
+            "@babel/preset-env",{ "targets":{ "node":"current" } }], 
+	        "@babel/preset-react"
+	]
+}
