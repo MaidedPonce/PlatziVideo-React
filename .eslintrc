@@ -9,6 +9,7 @@
   "globals": {
     "document": false,
     "escape": false,
+    "fetch": false,
     "navigator": false,
     "unescape": false,
     "window": false,
