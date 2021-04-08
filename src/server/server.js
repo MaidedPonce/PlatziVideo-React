@@ -28,7 +28,7 @@ if (ENV === 'development') {
 }
 
 // está recibiendo un html y ese mismo lo vamos a insertar en medio de donde colocamos nuestro entrypoint para que nuestra app del frontend entre
-const setResponse = (html) => {
+const setResponse = (html, preloadedState) => {
   return (
   `
   <!DOCTYPE html>
@@ -39,6 +39,12 @@ const setResponse = (html) => {
   </head>
   <body>
     <div id="app">${html}</div>
+    <script>
+    window.__PRELOADED_STATE__ = ${JSON.stringify(preloadedState).replace(
+    /</g,
+    '\\u003c'
+    )}
+    </script>
     <script src="assets/app.js" type="text/javascript"></script>
   </body>
 </html>
@@ -49,6 +55,8 @@ const setResponse = (html) => {
 // poder renderizar la app y a convertir a string
 const renderApp = (req, res) => {
   const store = createStore(reducer, initialState)
+  // nos va a traer todo el estado inicial configurado para poder ser pasado por nuestra configuración
+  const preloadedState = store.getState()
   const html = renderToString(
     // llamar a nuestro provider
     <Provider store={store}>
@@ -58,7 +66,7 @@ const renderApp = (req, res) => {
     </Provider>
   )
   // llamamos a nuestro setResponse para que sea respondido como una funcion de nuestro archivo de respuesta de nuestro servidor
-  res.send(setResponse(html))
+  res.send(setResponse(html, preloadedState))
 }
 
 app.get('*', renderApp)
