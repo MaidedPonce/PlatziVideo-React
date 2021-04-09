@@ -30,7 +30,9 @@ if (ENV === 'development') {
   // carpeta publica donde vamos aguardar todos los archivos que generemos dentro de nuestro bundle de webpack
   app.use(express.static(`${__dirname}/public`))
   app.use(helmet())
-  app.use(helmet.permittedCrossDomainPolicies())
+  app.use(helmet.permittedCrossDomainPolicies({
+    permittedPolicies: 'by-content-type'
+  }))
   app.disable('x-powered-by')
 }
 
@@ -72,6 +74,7 @@ const renderApp = (req, res) => {
       </StaticRouter>
     </Provider>
   )
+  res.set('Content-Security-Policy', "default-src *; style-src 'self' http://* 'unsafe-inline'; script-src 'self' http://* 'unsafe-inline' 'unsafe-eval'")
   // llamamos a nuestro setResponse para que sea respondido como una funcion de nuestro archivo de respuesta de nuestro servidor
   res.send(setResponse(html, preloadedState))
 }
@@ -82,6 +85,6 @@ app.listen(PORT, (err) => {
   if (err) {
     console.log(err)
   } else {
-    console.log('Server running on port 3000')
+    console.log(`Server running on port ${PORT}`)
   }
 })
