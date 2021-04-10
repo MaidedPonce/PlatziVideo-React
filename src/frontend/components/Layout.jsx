@@ -1,5 +1,5 @@
-import React from 'react'
-import Footer from './Footer'
+import React from 'react';
+import Footer from './Footer';
 
 const Layout = ({ children }) => (
   <div className='App'>
@@ -7,6 +7,6 @@ const Layout = ({ children }) => (
     <Footer />
   </div>
 
-)
+);
 
-export default Layout
+export default Layout;

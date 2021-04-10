@@ -6,20 +6,21 @@ import Header from '../components/Header'
 import '../assets/styles/components/Login.scss'
 import googleIcon from '../assets/static/google-icon.png'
 import twitterIcon from '../assets/static/twitter-icon.png'
-const Login = props => {
+
+const Login = (props) => {
   const [form, setValues] = useState({
     // le estoy pasando un objeto que va a ser la info inicial de este edo
     email: ''
   })
   /** Tenemos un name en el input y nos estamos trayendo el valor de lo que estoy colocando en el input y de esta forma puedo crear un nombre que sea dinamico segun el input que se esta manipulando */
-  const handleInput = event => {
+  const handleInput = (event) => {
     setValues({
       ...form,
       [event.target.name]: event.target.value
     })
   }
   // cuando nosotros le demos enviar a nuestro formulario, va a capturar nuestra info y la va a presentar donde sea necesario
-  const handleSubmit = event => {
+  const handleSubmit = (event) => {
     // cuando estamos trabajado con formularios en react, tenemos que pasarle el event.preventDefault porque no queremos que el formato que originalmente tiene html para manejar eventos dentro de un formulario se cumpla. Cuando le doy al boton de enviar o de iniciar sesión manda los parametros por url y esto puede causar conflicto
     event.preventDefault()
     props.loginRequest(form)
@@ -47,19 +48,30 @@ const Login = props => {
               placeholder='Contraseña'
               onChange={handleInput}
             />
-            <button className='button'>Iniciar sesión</button>
+            <button className='button' type='button'>Iniciar sesión</button>
             <div className='login__container--remember-me'>
-              <label>
-                <input type='checkbox' id='cbox1' value='first_checkbox' />Recuérdame
+              <label htmlFor='cbox1'>
+                <input type='checkbox' id='cbox1' value='first_checkbox' />
+                Recuérdame
               </label>
               <a href='/'>Olvidé mi contraseña</a>
             </div>
           </form>
           <section className='login__container--social-media'>
-            <div><img src={googleIcon} /> Inicia sesión con Google</div>
-            <div><img src={twitterIcon} /> Inicia sesión con Twitter</div>
+            <div>
+              <img src={googleIcon} alt='googleIcon' />
+              {' '}
+              Inicia sesión con Google
+            </div>
+            <div>
+              <img src={twitterIcon} alt='twitterIcon' />
+              {' '}
+              Inicia sesión con Twitter
+            </div>
           </section>
-          <p className='login__container--register'>No tienes ninguna cuenta {' '}
+          <p className='login__container--register'>
+            No tienes ninguna cuenta
+            {' '}
             <Link to='/register'>
               Registrate
             </Link>

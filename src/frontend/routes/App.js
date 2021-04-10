@@ -1,11 +1,11 @@
-import React from 'react'
-import { BrowserRouter, Route, Switch } from 'react-router-dom'
-import Home from '../containers/Home'
-import Login from '../containers/Login'
-import Register from '../containers/Register'
-import NotFound from '../containers/NotFound'
-import Player from '../containers/Player'
-import Layout from '../components/Layout'
+import React from 'react';
+import { BrowserRouter, Route, Switch } from 'react-router-dom';
+import Home from '../containers/Home';
+import Login from '../containers/Login';
+import Register from '../containers/Register';
+import NotFound from '../containers/NotFound';
+import Player from '../containers/Player';
+import Layout from '../components/Layout';
 // va a encapsular cada uno de los componentes: BrowserRouter
 // añadir el elemento que necesito: Route
 // le voy a decir que sea exacta : exact. Que cuando alguien entre a nuestra url principal, va a hacer el match con el path con el que va a recibir y luego vamos a exponer un componente. Entonces, si es exacta, le vamos a decir que utilice un componente y le vamos a pasar el componente que se llama App
@@ -22,6 +22,6 @@ const App = () => (
       </Switch>
     </Layout>
   </BrowserRouter>
-)
+);
 
-export default App
+export default App;
