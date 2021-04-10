@@ -44,7 +44,7 @@ module.exports = {
             // buscando y validando estrictamente que exista. Luego de que exista lo ejecutamos y traemos el nombre del chunk que estamos trayendo
             const name = module.nameForCondition && module.nameForCondition()
             // luego, con una expresion regular estamos validando que sea diferente de vendors y que esté dentro de node modules
-            return chunks.some(chunks => chunks.name != 'vendors' && /[\\/]node_modules[\\/]/.test(name))
+            return chunks.some(chunks => chunks.name !== 'vendors' && /[\\/]node_modules[\\/]/.test(name))
           }
         }
       }
@@ -52,6 +52,12 @@ module.exports = {
   },
   module: {
     rules: [
+      {
+        enforce: 'pre',
+        test: /\.(js|jsx)$/,
+        exclude: /node_modules/,
+        loader: 'eslint-loader'
+      },
       {
         test: /\.(js|jsx)$/,
         exclude: /node_modules/,
