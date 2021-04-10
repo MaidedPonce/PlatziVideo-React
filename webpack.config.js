@@ -36,10 +36,16 @@ module.exports = {
         vendors: {
           name: 'vendors',
           chunks: 'all',
-          reuseExistingchunk: true,
+          reuseExistingChunk: true,
           priority: 1,
           filename: isDev ? 'assets/vendor.js' : 'assets/vendor-[hash].js',
-          enforce: true
+          enforce: true,
+          test (module, chunks) {
+            // buscando y validando estrictamente que exista. Luego de que exista lo ejecutamos y traemos el nombre del chunk que estamos trayendo
+            const name = module.nameForCondition && module.nameForCondition()
+            // luego, con una expresion regular estamos validando que sea diferente de vendors y que esté dentro de node modules
+            return chunks.some(chunks => chunks.name != 'vendors' && /[\\/]node_modules[\\/]/.test(name))
+          }
         }
       }
     }
