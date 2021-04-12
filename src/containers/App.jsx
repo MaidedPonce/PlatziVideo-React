@@ -10,63 +10,28 @@ import '../assets/styles/App.scss'
 // const fetch = require('node-fetch')
 // npx json-server --watch initialState.json
 // contenedor principal
-const API = 'https://localhost:3000/initialState'
+const API = 'http://localhost:3000/initalState'
 const App = () => {
-  const [videos, setVideos] = useState({
-    mylist: [],
-    trends: [{
-      id: 2,
-      slug: 'tvshow-2',
-      title: 'In the Dark',
-      type: 'Scripted',
-      language: 'English',
-      year: 2009,
-      contentRating: '16+',
-      duration: 164,
-      cover: 'http://dummyimage.com/800x600.png/99118E/ffffff',
-      description: 'Vestibulum ac est lacinia nisi venenatis tristique',
-      source: 'https://mdstrm.com/video/58333e214ad055d208427db5.mp4'
-    }],
-    originals: [{
-      id: 4,
-      slug: 'tvshow-4',
-      title: 'Grand Hotel',
-      type: 'Comedy',
-      language: 'English',
-      year: 2014,
-      contentRating: '16+',
-      duration: 163,
-      cover: 'http://dummyimage.com/800x600.png/5472FF/ffffff',
-      description: 'Vestibulum ac est lacinia nisi venenatis tristique',
-      source: 'https://mdstrm.com/video/58333e214ad055d208427db5.mp4'
-    }]
-  })
-  useEffect(() => {
-    fetch(API, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'text/plain'
-      }
-      // body: JSON.stringify(myVar)
-    })
-      .then((response) => response.json())
-      .then((data) => setVideos(data))
-  }, [])
-  console.log(videos)
-  return (
+  const initialState = useInitialState(API)
+  return initialState.length === 0 ? <h1>Loading..</h1> : (
+
     <div className='App'>
       <Header />
       <Search />
-      {videos.mylist && videos.mylist.length && (
+      {initialState.mylist.length > 0 &&
         <Categories title='Mi lista'>
           <Carousel>
-            <Carouselitem />
+            {initialState.mylist.map(item =>
+              <Carouselitem
+                key={item.id}
+                {...item}
+              />
+            )}
           </Carousel>
-        </Categories>)}
-
+        </Categories>}
       <Categories title='Tendencias'>
         <Carousel>
-          {videos.trends.map(item =>
+          {initialState.trends.map(item =>
             <Carouselitem key={item.id} {...item} />
           )}
         </Carousel>
@@ -74,7 +39,7 @@ const App = () => {
 
       <Categories title='Originales de Platzi-Video'>
         <Carousel>
-          {videos.originals.map(item =>
+          {initialState.originals.map(item =>
             <Carouselitem key={item.id} {...item} />
           )}
         </Carousel>
